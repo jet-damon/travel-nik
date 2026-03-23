@@ -7,29 +7,49 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; line-height: 1.6; }
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
-        
-        header { text-align: center; padding: 40px 0 30px; border-bottom: 1px solid #222; margin-bottom: 30px; }
+        .container { max-width: 800px; margin: 0 auto; padding: 20px; padding-top: 70px; }
+
+        /* NAV BAR */
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: #111; border-bottom: 1px solid #222; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .nav-inner { max-width: 800px; margin: 0 auto; display: flex; align-items: center; overflow-x: auto; gap: 0; padding: 0 12px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+        .nav-inner::-webkit-scrollbar { display: none; }
+        .nav-inner a { color: #888; text-decoration: none; font-size: 12px; font-weight: 600; padding: 14px 10px; white-space: nowrap; transition: color 0.2s; flex-shrink: 0; }
+        .nav-inner a:hover, .nav-inner a.active { color: #f59e0b; }
+        .nav-brand { color: #fff !important; font-weight: 800; font-size: 14px !important; margin-right: 6px; }
+
+        header { text-align: center; padding: 30px 0 24px; border-bottom: 1px solid #222; margin-bottom: 24px; }
         header h1 { font-size: 28px; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
         header .subtitle { color: #888; font-size: 14px; margin-top: 6px; }
         header .dates { color: #f59e0b; font-size: 16px; margin-top: 8px; font-weight: 600; }
-        
-        .card { background: #141414; border: 1px solid #222; border-radius: 12px; padding: 24px; margin-bottom: 20px; }
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-        .card-title { font-size: 18px; font-weight: 700; color: #fff; }
-        .card-badge { font-size: 12px; padding: 4px 10px; border-radius: 20px; font-weight: 600; }
+
+        /* COLLAPSIBLE SECTIONS */
+        .section { margin-bottom: 20px; }
+        .section-toggle { width: 100%; background: #141414; border: 1px solid #222; border-radius: 12px; padding: 18px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; }
+        .section-toggle:hover { border-color: #333; background: #1a1a1a; }
+        .section-toggle.open { border-radius: 12px 12px 0 0; border-bottom-color: transparent; }
+        .section-toggle .toggle-left { display: flex; align-items: center; gap: 12px; }
+        .section-toggle .toggle-title { font-size: 18px; font-weight: 700; color: #fff; }
+        .section-toggle .toggle-badge { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 600; }
+        .section-toggle .chevron { font-size: 18px; color: #555; transition: transform 0.3s; }
+        .section-toggle.open .chevron { transform: rotate(180deg); }
+        .section-body { background: #141414; border: 1px solid #222; border-top: none; border-radius: 0 0 12px 12px; padding: 0 24px 24px; display: none; }
+        .section-body.open { display: block; }
+
         .badge-flight { background: #1e3a5f; color: #60a5fa; }
         .badge-event { background: #3b1f4a; color: #c084fc; }
         .badge-dj { background: #1a3a2a; color: #4ade80; }
         .badge-stay { background: #3a2a1a; color: #f59e0b; }
-        .badge-travel { background: #3a1a1a; color: #f87171; }
-        
-        .card-date { font-size: 13px; color: #888; margin-bottom: 12px; font-weight: 500; }
+        .badge-local { background: #1a3a3a; color: #5eead4; }
+        .badge-podcast { background: #3a2a1a; color: #fbbf24; }
+        .badge-people { background: #f59e0b22; color: #f59e0b; }
+        .badge-contacts { background: #3a2a1a; color: #f59e0b; }
+
+        .card-date { font-size: 13px; color: #888; margin-bottom: 12px; margin-top: 16px; font-weight: 500; }
         .card-detail { display: flex; margin-bottom: 8px; }
         .card-detail .label { color: #666; min-width: 130px; font-size: 14px; }
         .card-detail .value { color: #ccc; font-size: 14px; }
         .card-detail .value strong { color: #fff; }
-        
+
         .flight-route { display: flex; align-items: center; justify-content: space-between; background: #1a1a1a; border-radius: 8px; padding: 20px; margin: 16px 0; }
         .flight-city { text-align: center; }
         .flight-code { font-size: 28px; font-weight: 800; color: #fff; }
@@ -37,25 +57,23 @@
         .flight-time { font-size: 18px; font-weight: 600; color: #f59e0b; margin-top: 6px; }
         .flight-arrow { font-size: 24px; color: #444; }
         .flight-number { font-size: 12px; color: #888; text-align: center; }
-        
+
         .alert { background: #2a1a1a; border: 1px solid #5c2020; border-radius: 8px; padding: 12px 16px; margin-top: 12px; font-size: 13px; color: #f87171; }
         .alert strong { color: #fca5a5; }
-        
         .info-note { background: #1a2a1a; border: 1px solid #1a3a2a; border-radius: 8px; padding: 12px 16px; margin-top: 12px; font-size: 13px; color: #86efac; }
-        
+
         .equipment-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
         .equipment-table th { text-align: left; font-size: 12px; color: #666; padding: 8px 0; border-bottom: 1px solid #222; text-transform: uppercase; letter-spacing: 0.5px; }
         .equipment-table td { font-size: 13px; color: #ccc; padding: 8px 0; border-bottom: 1px solid #1a1a1a; }
         .equipment-table .total-row td { border-top: 1px solid #333; font-weight: 700; color: #fff; padding-top: 12px; }
-        
-        .section-divider { text-align: center; color: #333; margin: 30px 0; font-size: 20px; letter-spacing: 8px; }
-        
-        .back-link { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #222; }
-        .back-link a { color: #60a5fa; text-decoration: none; font-size: 14px; }
-        .back-link a:hover { text-decoration: underline; }
 
-        .badge-local { background: #1a3a3a; color: #5eead4; }
-        .badge-podcast { background: #3a2a1a; color: #fbbf24; }
+        .timeline { position: relative; padding-left: 20px; margin-top: 16px; }
+        .timeline::before { content: ''; position: absolute; left: 6px; top: 4px; bottom: 4px; width: 2px; background: #333; }
+        .timeline-item { position: relative; padding-left: 20px; margin-bottom: 14px; }
+        .timeline-item::before { content: ''; position: absolute; left: -16px; top: 7px; width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; }
+        .timeline-item .time { font-size: 12px; color: #f59e0b; font-weight: 600; }
+        .timeline-item .desc { font-size: 14px; color: #ccc; }
+
         .spot-list { list-style: none; padding: 0; }
         .spot-list li { padding: 12px 0; border-bottom: 1px solid #1a1a1a; }
         .spot-list li:last-child { border-bottom: none; }
@@ -64,17 +82,62 @@
         .spot-address { font-size: 13px; color: #888; margin-top: 2px; }
         .spot-note { font-size: 13px; color: #aaa; margin-top: 2px; }
         .status-pending { color: #fbbf24; font-weight: 600; }
-        .status-confirmed { color: #4ade80; font-weight: 600; }
 
-        .timeline { position: relative; padding-left: 20px; margin-top: 16px; }
-        .timeline::before { content: ''; position: absolute; left: 6px; top: 4px; bottom: 4px; width: 2px; background: #333; }
-        .timeline-item { position: relative; padding-left: 20px; margin-bottom: 14px; }
-        .timeline-item::before { content: ''; position: absolute; left: -16px; top: 7px; width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; }
-        .timeline-item .time { font-size: 12px; color: #f59e0b; font-weight: 600; }
-        .timeline-item .desc { font-size: 14px; color: #ccc; }
+        /* PEOPLE TO MEET - INTERACTIVE */
+        .person-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px solid #1a1a1a; }
+        .person-row:last-child { border-bottom: none; }
+        .person-check { flex-shrink: 0; margin-top: 2px; }
+        .person-check input[type="checkbox"] { display: none; }
+        .person-check label { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; border: 2px solid #333; background: #1a1a1a; cursor: pointer; transition: all 0.2s; font-size: 16px; }
+        .person-check input:checked + label { background: #f59e0b; border-color: #f59e0b; }
+        .person-check input:checked + label::after { content: '✓'; color: #000; font-weight: 800; }
+        .person-info { flex: 1; }
+        .person-name { font-weight: 700; color: #fff; font-size: 15px; }
+        .person-company { font-size: 13px; color: #888; }
+        .person-reason { font-size: 13px; color: #aaa; margin-top: 4px; }
+        .person-dates { font-size: 12px; color: #f59e0b; margin-top: 3px; font-weight: 500; }
+        .person-rating { flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; margin-top: 2px; }
+        .rating-10 { background: #ef444422; color: #ef4444; }
+        .rating-9 { background: #f59e0b22; color: #f59e0b; }
+        .rating-8 { background: #22d3ee22; color: #22d3ee; }
+        .rating-7 { background: #a78bfa22; color: #a78bfa; }
+        .rating-6 { background: #4ade8022; color: #4ade80; }
+        .rating-5 { background: #88888822; color: #888; }
+
+        .tier-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-top: 16px; margin-bottom: 4px; padding: 6px 0; }
+
+        .selected-count { background: #1a2a1a; border: 1px solid #1a3a2a; border-radius: 8px; padding: 12px 16px; margin-top: 16px; font-size: 14px; color: #86efac; text-align: center; }
+
+        .back-link { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #222; }
+        .back-link a { color: #60a5fa; text-decoration: none; font-size: 14px; }
+
+        @media (max-width: 600px) {
+            .nav-inner a { font-size: 11px; padding: 12px 8px; }
+            .flight-route { padding: 14px; }
+            .flight-code { font-size: 22px; }
+            .section-toggle { padding: 14px 16px; }
+            .section-body { padding: 0 16px 16px; }
+            .section-toggle .toggle-title { font-size: 16px; }
+        }
     </style>
 </head>
 <body>
+    <!-- NAVIGATION BAR -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="nav-brand">🌴 MIA</a>
+            <a href="#stay">Stay</a>
+            <a href="#flight">Flight</a>
+            <a href="#sound">Sound</a>
+            <a href="#yacht">Yacht</a>
+            <a href="#onek">One K</a>
+            <a href="#podcasts">Podcasts</a>
+            <a href="#people">People</a>
+            <a href="#spots">Spots</a>
+            <a href="#contacts">Contacts</a>
+        </div>
+    </nav>
+
     <div class="container">
         <header>
             <h1>🌴 Miami — Music Week & Beyond</h1>
@@ -83,413 +146,419 @@
         </header>
 
         <!-- ACCOMMODATION -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">🏠 Accommodation</div>
-                <span class="card-badge badge-stay">STAY</span>
+        <div class="section" id="stay">
+            <div class="section-toggle" onclick="toggle(this)">
+                <div class="toggle-left">
+                    <span class="toggle-title">🏠 Accommodation</span>
+                    <span class="toggle-badge badge-stay">STAY</span>
+                </div>
+                <span class="chevron">▼</span>
             </div>
-            <div class="card-date">Mar 23 — Apr 6 (2 weeks)</div>
-            <div class="card-detail">
-                <div class="label">Address</div>
-                <div class="value"><strong>488 NE 18th St, Unit 4215</strong><br>Miami, FL 33132</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Staying with</div>
-                <div class="value">Troy Osinoff (Troy's Miami apartment)</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Troy NY Address</div>
-                <div class="value">93 Reade St, NY 10013</div>
+            <div class="section-body">
+                <div class="card-date">Mar 23 — Apr 6 (2 weeks)</div>
+                <div class="card-detail">
+                    <div class="label">Address</div>
+                    <div class="value"><strong>488 NE 18th St, Unit 4215</strong><br>Miami, FL 33132</div>
+                </div>
+                <div class="card-detail">
+                    <div class="label">Staying with</div>
+                    <div class="value">Troy Osinoff (Troy's Miami apartment)</div>
+                </div>
+                <div class="card-detail">
+                    <div class="label">Troy NY Address</div>
+                    <div class="value">93 Reade St, NY 10013</div>
+                </div>
             </div>
         </div>
-
-        <div class="section-divider">· · ·</div>
 
         <!-- FLIGHT -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">✈️ JSX Flight — Outbound</div>
-                <span class="card-badge badge-flight">FLIGHT</span>
-            </div>
-            <div class="card-date">Monday, March 23, 2026</div>
-            
-            <div class="flight-route">
-                <div class="flight-city">
-                    <div class="flight-code">TEB</div>
-                    <div class="flight-name">Teterboro Airport</div>
-                    <div class="flight-time">12:55 PM</div>
+        <div class="section" id="flight">
+            <div class="section-toggle" onclick="toggle(this)">
+                <div class="toggle-left">
+                    <span class="toggle-title">✈️ JSX Flight — Outbound</span>
+                    <span class="toggle-badge badge-flight">FLIGHT</span>
                 </div>
-                <div>
-                    <div class="flight-number">XE 1114</div>
-                    <div class="flight-arrow">→</div>
+                <span class="chevron">▼</span>
+            </div>
+            <div class="section-body">
+                <div class="card-date">Monday, March 23, 2026</div>
+                <div class="flight-route">
+                    <div class="flight-city">
+                        <div class="flight-code">TEB</div>
+                        <div class="flight-name">Teterboro Airport</div>
+                        <div class="flight-time">12:55 PM</div>
+                    </div>
+                    <div>
+                        <div class="flight-number">XE 1114</div>
+                        <div class="flight-arrow">→</div>
+                    </div>
+                    <div class="flight-city">
+                        <div class="flight-code">FXE</div>
+                        <div class="flight-name">Ft Lauderdale Executive</div>
+                        <div class="flight-time">4:10 PM</div>
+                    </div>
                 </div>
-                <div class="flight-city">
-                    <div class="flight-code">FXE</div>
-                    <div class="flight-name">Ft Lauderdale Executive</div>
-                    <div class="flight-time">4:10 PM</div>
+                <div class="card-detail">
+                    <div class="label">Confirmation</div>
+                    <div class="value"><strong>H19I8Y</strong></div>
                 </div>
-            </div>
-            
-            <div class="card-detail">
-                <div class="label">Confirmation</div>
-                <div class="value"><strong>H19I8Y</strong></div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Departure</div>
-                <div class="value">107 Charles A Lindbergh Dr, Teterboro, NJ 07608</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Arrival</div>
-                <div class="value">2011 S Perimeter Rd Ste. 49A-8, Fort Lauderdale, FL 33309</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Ground Transport</div>
-                <div class="value">Go Rentals — (866) 664-0994</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Check-in</div>
-                <div class="value">At least 20 min before departure (domestic)</div>
-            </div>
-
-            <div class="alert">
-                <strong>⚠️ REAL ID REQUIRED.</strong> JSX follows different TSA requirements. No exceptions — must have compliant REAL ID or Passport.
+                <div class="card-detail">
+                    <div class="label">Departure</div>
+                    <div class="value">107 Charles A Lindbergh Dr, Teterboro, NJ 07608</div>
+                </div>
+                <div class="card-detail">
+                    <div class="label">Arrival</div>
+                    <div class="value">2011 S Perimeter Rd Ste. 49A-8, Fort Lauderdale, FL 33309</div>
+                </div>
+                <div class="card-detail">
+                    <div class="label">Ground Transport</div>
+                    <div class="value">Go Rentals — (866) 664-0994</div>
+                </div>
+                <div class="alert">
+                    <strong>⚠️ REAL ID REQUIRED.</strong> JSX follows different TSA requirements. No exceptions.
+                </div>
             </div>
         </div>
 
-        <div class="section-divider">· · ·</div>
-
-        <!-- SOUND SETUP / LOAD IN -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">🔊 Sound Equipment Load-In</div>
-                <span class="card-badge badge-event">SETUP</span>
+        <!-- SOUND SETUP -->
+        <div class="section" id="sound">
+            <div class="section-toggle" onclick="toggle(this)">
+                <div class="toggle-left">
+                    <span class="toggle-title">🔊 Sound Equipment Load-In</span>
+                    <span class="toggle-badge badge-event">SETUP</span>
+                </div>
+                <span class="chevron">▼</span>
             </div>
-            <div class="card-date">Monday, March 24, 2026 — 9:00 AM – 5:00 PM</div>
-            
-            <div class="card-detail">
-                <div class="label">Venue</div>
-                <div class="value"><strong>Miami Beach Marina</strong><br>300 Alton Rd, Miami Beach, FL 33139</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Vendor</div>
-                <div class="value">DNABOX (dnabox.art)</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Account Mgr</div>
-                <div class="value">Nick Assunto</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Client Contact</div>
-                <div class="value">All Access Social — Brandon (786-326-3319, brandon@launerts.com)</div>
-            </div>
-
-            <table class="equipment-table">
-                <thead>
-                    <tr><th>Category</th><th>Items</th><th style="text-align:right">Cost</th></tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Audio</td>
-                        <td>4x SYVA L-Acoustics (+ cases, plates, LOW), Whirlwind Snake, cables, 2x X15-HIQ monitors, LV1 Waves Mixer, 3x LA12X Amplifier</td>
-                        <td style="text-align:right">$2,950</td>
-                    </tr>
-                    <tr>
-                        <td>DJ Equipment</td>
-                        <td>4x CDJ-3000 Pioneer, 1x Pioneer V10 LF, 1x RMX-1000 Pioneer</td>
-                        <td style="text-align:right">$1,150</td>
-                    </tr>
-                    <tr>
-                        <td>Power</td>
-                        <td>4x Edison to EC3 power cords</td>
-                        <td style="text-align:right">$0</td>
-                    </tr>
-                    <tr>
-                        <td>Labor</td>
-                        <td>2x System Tech (9 AM – 5 PM)</td>
-                        <td style="text-align:right">$1,100</td>
-                    </tr>
-                    <tr>
-                        <td>Delivery/Pickup</td>
-                        <td>—</td>
-                        <td style="text-align:right">$350</td>
-                    </tr>
-                    <tr>
-                        <td>Sales Tax</td>
-                        <td>—</td>
-                        <td style="text-align:right">$287</td>
-                    </tr>
-                    <tr class="total-row">
-                        <td>TOTAL</td>
-                        <td></td>
-                        <td style="text-align:right">$5,837</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="info-note">
-                📝 Note: Client will provide power at list (2) 20 Amps Outlets
+            <div class="section-body">
+                <div class="card-date">Monday, March 24, 2026 — 9:00 AM – 5:00 PM</div>
+                <div class="card-detail">
+                    <div class="label">Venue</div>
+                    <div class="value"><strong>Miami Beach Marina</strong><br>300 Alton Rd, Miami Beach, FL 33139</div>
+                </div>
+                <div class="card-detail">
+                    <div class="label">Vendor</div>
+                    <div class="value">DNABOX (dnabox.art)</div>
+                </div>
+                <div class="card-detail">
+                    <div class="label">Account Mgr</div>
+                    <div class="value">Nick Assunto</div>
+                </div>
+                <div class="card-detail">
+                    <div class="label">Client Contact</div>
+                    <div class="value">All Access Social — Brandon (786-326-3319)</div>
+                </div>
+                <table class="equipment-table">
+                    <thead><tr><th>Category</th><th>Items</th><th style="text-align:right">Cost</th></tr></thead>
+                    <tbody>
+                        <tr><td>Audio</td><td>4x SYVA L-Acoustics, Snake, cables, 2x monitors, LV1 Mixer, 3x LA12X Amp</td><td style="text-align:right">$2,950</td></tr>
+                        <tr><td>DJ Equipment</td><td>4x CDJ-3000, 1x Pioneer V10 LF, 1x RMX-1000</td><td style="text-align:right">$1,150</td></tr>
+                        <tr><td>Labor</td><td>2x System Tech (9 AM – 5 PM)</td><td style="text-align:right">$1,100</td></tr>
+                        <tr><td>Delivery + Tax</td><td>—</td><td style="text-align:right">$637</td></tr>
+                        <tr class="total-row"><td>TOTAL</td><td></td><td style="text-align:right">$5,837</td></tr>
+                    </tbody>
+                </table>
+                <div class="info-note">📝 Client will provide power — (2) 20 Amp Outlets</div>
             </div>
         </div>
-
-        <div class="section-divider">· · ·</div>
 
         <!-- YACHT PARTY -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">🛥️ After Ours @ MMW — Yacht Party</div>
-                <span class="card-badge badge-dj">DJ SET</span>
-            </div>
-            <div class="card-date">Wednesday, March 25, 2026 — 3:00 PM – 7:00 PM</div>
-            
-            <div class="card-detail">
-                <div class="label">Event</div>
-                <div class="value"><strong>After Ours live. Offshore. Miami Music Week.</strong></div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Location</div>
-                <div class="value">Miami Beach Marina, 300 Alton Rd, Miami Beach, FL 33139</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Capacity</div>
-                <div class="value">40 person cap</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">RSVP</div>
-                <div class="value">Partiful — "After Ours @ MMW"</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Transport</div>
-                <div class="value"><strong>Sprinter van booked</strong> — pickup from Troy's apartment (488 NE 18th St) to marina</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Budget</div>
-                <div class="value">~$16K total (sound $5,837 + venue + transport + misc)</div>
-            </div>
-
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="time">~2:00 PM</div>
-                    <div class="desc">Sprinter pickup from Troy's apartment</div>
+        <div class="section" id="yacht">
+            <div class="section-toggle" onclick="toggle(this)">
+                <div class="toggle-left">
+                    <span class="toggle-title">🛥️ Yacht Party — MMW</span>
+                    <span class="toggle-badge badge-dj">DJ SET</span>
                 </div>
-                <div class="timeline-item">
-                    <div class="time">3:00 PM</div>
-                    <div class="desc">Event starts — board yacht</div>
+                <span class="chevron">▼</span>
+            </div>
+            <div class="section-body">
+                <div class="card-date">Wednesday, March 25, 2026 — 3:00 PM – 7:00 PM</div>
+                <div class="card-detail">
+                    <div class="label">Event</div>
+                    <div class="value"><strong>After Ours live. Offshore. Miami Music Week.</strong></div>
                 </div>
-                <div class="timeline-item">
-                    <div class="time">3:00 – 7:00 PM</div>
-                    <div class="desc">After Ours DJ set</div>
+                <div class="card-detail">
+                    <div class="label">Location</div>
+                    <div class="value">Miami Beach Marina, 300 Alton Rd</div>
                 </div>
-                <div class="timeline-item">
-                    <div class="time">7:00 PM</div>
-                    <div class="desc">Event ends — return to marina</div>
+                <div class="card-detail">
+                    <div class="label">Capacity</div>
+                    <div class="value">40 person cap</div>
+                </div>
+                <div class="card-detail">
+                    <div class="label">Transport</div>
+                    <div class="value"><strong>Sprinter van</strong> — pickup from Troy's apartment</div>
+                </div>
+                <div class="card-detail">
+                    <div class="label">Budget</div>
+                    <div class="value">~$16K total</div>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item"><div class="time">~2:00 PM</div><div class="desc">Sprinter pickup from Troy's apartment</div></div>
+                    <div class="timeline-item"><div class="time">3:00 PM</div><div class="desc">Event starts — board yacht</div></div>
+                    <div class="timeline-item"><div class="time">3:00 – 7:00 PM</div><div class="desc">After Ours DJ set</div></div>
+                    <div class="timeline-item"><div class="time">7:00 PM</div><div class="desc">Event ends — return to marina</div></div>
                 </div>
             </div>
         </div>
-
-        <div class="section-divider">· · ·</div>
 
         <!-- ONE K GIG -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">🎧 After Ours @ One K — Opening Set</div>
-                <span class="card-badge badge-dj">DJ SET</span>
+        <div class="section" id="onek">
+            <div class="section-toggle" onclick="toggle(this)">
+                <div class="toggle-left">
+                    <span class="toggle-title">🎧 One K — Opening Set</span>
+                    <span class="toggle-badge badge-dj">DJ SET</span>
+                </div>
+                <span class="chevron">▼</span>
             </div>
-            <div class="card-date">Friday, March 27, 2026</div>
-            
-            <div class="card-detail">
-                <div class="label">Event</div>
-                <div class="value"><strong>Opening for Berin at One K</strong></div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Venue</div>
-                <div class="value">1K (One K), Miami</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Connected by</div>
-                <div class="value">Santiago Cruz (via Berin)</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Budget</div>
-                <div class="value">$0 — no pay for opening slot (Nik + Troy confirmed, "LEt's do it!!")</div>
-            </div>
-
-            <div class="info-note">
-                📝 No additional budget from the venue. This is a visibility/exposure play during MMW.
+            <div class="section-body">
+                <div class="card-date">Friday, March 27, 2026</div>
+                <div class="card-detail">
+                    <div class="label">Event</div>
+                    <div class="value"><strong>Opening for Berin at One K</strong></div>
+                </div>
+                <div class="card-detail">
+                    <div class="label">Connected by</div>
+                    <div class="value">Santiago Cruz (via Berin)</div>
+                </div>
+                <div class="card-detail">
+                    <div class="label">Budget</div>
+                    <div class="value">$0 — visibility play during MMW</div>
+                </div>
+                <div class="info-note">📝 No pay for opening slot. Exposure play during Music Week.</div>
             </div>
         </div>
-
-        <div class="section-divider">· · ·</div>
 
         <!-- PODCASTS -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">🎙️ In-Person Podcasts</div>
-                <span class="card-badge badge-podcast">PODCASTS</span>
+        <div class="section" id="podcasts">
+            <div class="section-toggle" onclick="toggle(this)">
+                <div class="toggle-left">
+                    <span class="toggle-title">🎙️ In-Person Podcasts</span>
+                    <span class="toggle-badge badge-podcast">PODCASTS</span>
+                </div>
+                <span class="chevron">▼</span>
             </div>
-            <div class="card-date">During Miami Trip — Dates TBD</div>
-
-            <div class="card-detail">
-                <div class="label">Status</div>
-                <div class="value">Nik texted all guests — <span class="status-pending">awaiting confirmations</span></div>
+            <div class="section-body">
+                <div class="card-date">During Miami Trip — Dates TBD</div>
+                <ul class="spot-list">
+                    <li><span class="spot-name">Podcast Hudson</span><div class="spot-address"><span class="status-pending">⏳ Pending confirmation</span></div></li>
+                    <li><span class="spot-name">Eight Sleep Founders</span><div class="spot-address"><span class="status-pending">⏳ Pending confirmation</span></div></li>
+                    <li><span class="spot-name">Geoff Hunting</span><div class="spot-address"><span class="status-pending">⏳ Pending confirmation</span></div></li>
+                    <li><span class="spot-name">Instant.ai Client (via WW)</span><div class="spot-address"><span class="status-pending">⏳ Pending — week of Mar 30</span></div></li>
+                </ul>
             </div>
-
-            <ul class="spot-list" style="margin-top: 16px;">
-                <li>
-                    <span class="spot-name">Podcast Hudson</span>
-                    <div class="spot-address"><span class="status-pending">⏳ Pending confirmation</span></div>
-                </li>
-                <li>
-                    <span class="spot-name">Eight Sleep Founders</span>
-                    <div class="spot-address"><span class="status-pending">⏳ Pending confirmation</span></div>
-                </li>
-                <li>
-                    <span class="spot-name">Geoff Hunting</span>
-                    <div class="spot-address"><span class="status-pending">⏳ Pending confirmation</span></div>
-                </li>
-                <li>
-                    <span class="spot-name">Instant.ai Client (via WW sponsor)</span>
-                    <div class="spot-address"><span class="status-pending">⏳ Pending — week of Mar 30</span></div>
-                    <div class="spot-note">In-person podcast with one of Instant's clients. Coordinated through Workweek.</div>
-                </li>
-            </ul>
         </div>
 
-        <div class="section-divider">· · ·</div>
-
-        <!-- PEOPLE TO MEET -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">🤝 People to Meet</div>
-                <span class="card-badge" style="background: #f59e0b22; color: #f59e0b;">NETWORKING</span>
+        <!-- PEOPLE TO MEET — INTERACTIVE -->
+        <div class="section" id="people">
+            <div class="section-toggle" onclick="toggle(this)">
+                <div class="toggle-left">
+                    <span class="toggle-title">🤝 People to Meet</span>
+                    <span class="toggle-badge badge-people">NETWORKING</span>
+                </div>
+                <span class="chevron">▼</span>
             </div>
-            <div class="card-date">Tap ✅ on anyone you want to connect with — Jet will coordinate</div>
-            <p style="margin-top: 12px; margin-bottom: 4px;"><a href="https://docs.google.com/spreadsheets/d/1fU8lxvT7iGONZOK8OwVDP5hQnEzGbVJF83Tr1ZK8WEM/edit?usp=sharing" target="_blank" style="color: #f59e0b; text-decoration: underline;">📊 Full sheet with details + checkboxes →</a></p>
+            <div class="section-body">
+                <div class="card-date">Tap the checkbox next to anyone you want to meet — Jet will coordinate</div>
+                <div class="selected-count" id="selectedCount">0 people selected</div>
 
-            <h4 style="color: #ef4444; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-top: 16px; margin-bottom: 8px;">🔥 Must Meet (10)</h4>
-            <ul class="spot-list">
-                <li><strong>Dimitrios Zacharias</strong> — UnKommon Events. Lives in Miami. Close friend + RV investment in play.</li>
-                <li><strong>Dan</strong> — Marpipe. Best friend. Need to confirm if he's in Miami.</li>
-            </ul>
+                <div class="tier-label" style="color: #ef4444;">🔥 MUST MEET</div>
+                <div class="person-row">
+                    <div class="person-check"><input type="checkbox" id="p-dimitrios" onchange="savePeople()"><label for="p-dimitrios"></label></div>
+                    <div class="person-info">
+                        <div class="person-name">Dimitrios Zacharias</div>
+                        <div class="person-company">UnKommon Events · Co-founder</div>
+                        <div class="person-reason">Close friend. Miami venue owner (Little River Studios). RV investment in play.</div>
+                        <div class="person-dates">📍 Lives in Miami</div>
+                    </div>
+                    <div class="person-rating rating-10">10</div>
+                </div>
+                <div class="person-row">
+                    <div class="person-check"><input type="checkbox" id="p-dan" onchange="savePeople()"><label for="p-dan"></label></div>
+                    <div class="person-info">
+                        <div class="person-name">Dan</div>
+                        <div class="person-company">Marpipe · Founder</div>
+                        <div class="person-reason">Best friend. Must-see if he's in Miami.</div>
+                        <div class="person-dates">📅 TBD — confirm if in Miami</div>
+                    </div>
+                    <div class="person-rating rating-10">10</div>
+                </div>
 
-            <h4 style="color: #f59e0b; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-top: 12px; margin-bottom: 8px;">⚡ High Priority (9)</h4>
-            <ul class="spot-list">
-                <li><strong>Kenny Hanson</strong> — MentorPass. In Miami for Hyrox. Wants Joe's Stone Crab dinner.</li>
-                <li><strong>Rasheen</strong> — Flexpower. Potential partner. Text him to set up a meet.</li>
-            </ul>
+                <div class="tier-label" style="color: #f59e0b;">⚡ HIGH PRIORITY</div>
+                <div class="person-row">
+                    <div class="person-check"><input type="checkbox" id="p-kenny" onchange="savePeople()"><label for="p-kenny"></label></div>
+                    <div class="person-info">
+                        <div class="person-name">Kenny Hanson</div>
+                        <div class="person-company">MentorPass · Founder/CEO</div>
+                        <div class="person-reason">In Miami for Hyrox. Wants Joe's Stone Crab dinner + cigars.</div>
+                        <div class="person-dates">📅 Late March (Hyrox weekend)</div>
+                    </div>
+                    <div class="person-rating rating-9">9</div>
+                </div>
+                <div class="person-row">
+                    <div class="person-check"><input type="checkbox" id="p-rasheen" onchange="savePeople()"><label for="p-rasheen"></label></div>
+                    <div class="person-info">
+                        <div class="person-name">Rasheen</div>
+                        <div class="person-company">Flexpower · Founder</div>
+                        <div class="person-reason">Potential business partner. Still needs that text to set up a call.</div>
+                        <div class="person-dates">📅 TBD — confirm</div>
+                    </div>
+                    <div class="person-rating rating-9">9</div>
+                </div>
 
-            <h4 style="color: #22d3ee; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-top: 12px; margin-bottom: 8px;">💎 Strong (8)</h4>
-            <ul class="spot-list">
-                <li><strong>Philippe von Borries</strong> — Esspo. Shelf launch Apr 6.</li>
-                <li><strong>Erica Amatori</strong> — Left Lane Capital. Kids vitamin brand.</li>
-                <li><strong>Jordan Nathan</strong> — Caraway Home. Mixing Bowl launch.</li>
-                <li><strong>Hudson</strong> — Comfrt. Podcast recording target.</li>
-            </ul>
+                <div class="tier-label" style="color: #22d3ee;">💎 STRONG</div>
+                <div class="person-row">
+                    <div class="person-check"><input type="checkbox" id="p-philippe" onchange="savePeople()"><label for="p-philippe"></label></div>
+                    <div class="person-info">
+                        <div class="person-name">Philippe von Borries</div>
+                        <div class="person-company">Esspo · Founder</div>
+                        <div class="person-reason">Beverage brand. Shelf launch April 6.</div>
+                        <div class="person-dates">📅 TBD — shelf launch Apr 6</div>
+                    </div>
+                    <div class="person-rating rating-8">8</div>
+                </div>
+                <div class="person-row">
+                    <div class="person-check"><input type="checkbox" id="p-erica" onchange="savePeople()"><label for="p-erica"></label></div>
+                    <div class="person-info">
+                        <div class="person-name">Erica Amatori</div>
+                        <div class="person-company">Left Lane Capital</div>
+                        <div class="person-reason">Kids vitamin brand discussion. Agreed to in-person after Apr 6.</div>
+                        <div class="person-dates">📅 TBD — agreed to post-Apr 6</div>
+                    </div>
+                    <div class="person-rating rating-8">8</div>
+                </div>
+                <div class="person-row">
+                    <div class="person-check"><input type="checkbox" id="p-jordan" onchange="savePeople()"><label for="p-jordan"></label></div>
+                    <div class="person-info">
+                        <div class="person-name">Jordan Nathan</div>
+                        <div class="person-company">Caraway Home · Founder</div>
+                        <div class="person-reason">Mixing Bowl launch coordination. Active email threads.</div>
+                        <div class="person-dates">📅 TBD — confirm</div>
+                    </div>
+                    <div class="person-rating rating-8">8</div>
+                </div>
+                <div class="person-row">
+                    <div class="person-check"><input type="checkbox" id="p-hudson" onchange="savePeople()"><label for="p-hudson"></label></div>
+                    <div class="person-info">
+                        <div class="person-name">Hudson</div>
+                        <div class="person-company">Comfrt · Founder</div>
+                        <div class="person-reason">Podcast recording target. Great rapport from OpenClaw setup call.</div>
+                        <div class="person-dates">📅 TBD — confirm podcast recording</div>
+                    </div>
+                    <div class="person-rating rating-8">8</div>
+                </div>
 
-            <h4 style="color: #a78bfa; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-top: 12px; margin-bottom: 8px;">👀 Worth It (7)</h4>
-            <ul class="spot-list">
-                <li><strong>Kyle</strong> — Price NY. Mastermind Apr 3.</li>
-                <li><strong>Miki</strong> — Hiro Technologies. Follow-up pending.</li>
-                <li><strong>Sterling</strong> — MentorPass. Coordinate with Kenny dinner.</li>
-                <li><strong>Nick & Kim</strong> — Hoolest. $540K/30 days. Investment + marketing.</li>
-                <li><strong>Collin Rice & Victoria Davenport</strong> — JP Morgan. Ecom Founders events interest.</li>
-                <li><strong>Mike Forbes</strong> — Vitamin Shoppe CSO. Retail partnership.</li>
-            </ul>
+                <div class="tier-label" style="color: #a78bfa;">👀 WORTH IT</div>
+                <div class="person-row">
+                    <div class="person-check"><input type="checkbox" id="p-kyle" onchange="savePeople()"><label for="p-kyle"></label></div>
+                    <div class="person-info">
+                        <div class="person-name">Kyle</div>
+                        <div class="person-company">Price NY</div>
+                        <div class="person-reason">Mastermind Miami April 3rd signup sent.</div>
+                        <div class="person-dates">📅 Apr 3 (Mastermind)</div>
+                    </div>
+                    <div class="person-rating rating-7">7</div>
+                </div>
+                <div class="person-row">
+                    <div class="person-check"><input type="checkbox" id="p-miki" onchange="savePeople()"><label for="p-miki"></label></div>
+                    <div class="person-info">
+                        <div class="person-name">Miki</div>
+                        <div class="person-company">Hiro Technologies</div>
+                        <div class="person-reason">Follow-up pending. Connected with Jerrell (Tushy).</div>
+                        <div class="person-dates">📅 TBD — confirm</div>
+                    </div>
+                    <div class="person-rating rating-7">7</div>
+                </div>
+                <div class="person-row">
+                    <div class="person-check"><input type="checkbox" id="p-sterling" onchange="savePeople()"><label for="p-sterling"></label></div>
+                    <div class="person-info">
+                        <div class="person-name">Sterling</div>
+                        <div class="person-company">MentorPass</div>
+                        <div class="person-reason">Co-founder with Kenny. Combine with Kenny dinner.</div>
+                        <div class="person-dates">📅 Late Mar (with Kenny)</div>
+                    </div>
+                    <div class="person-rating rating-7">7</div>
+                </div>
+                <div class="person-row">
+                    <div class="person-check"><input type="checkbox" id="p-hoolest" onchange="savePeople()"><label for="p-hoolest"></label></div>
+                    <div class="person-info">
+                        <div class="person-name">Nick & Kim</div>
+                        <div class="person-company">Hoolest · Founders</div>
+                        <div class="person-reason">$540K/30 days. Exploring investment + marketing.</div>
+                        <div class="person-dates">📅 TBD — confirm</div>
+                    </div>
+                    <div class="person-rating rating-7">7</div>
+                </div>
+                <div class="person-row">
+                    <div class="person-check"><input type="checkbox" id="p-jpmorgan" onchange="savePeople()"><label for="p-jpmorgan"></label></div>
+                    <div class="person-info">
+                        <div class="person-name">Collin Rice & Victoria Davenport</div>
+                        <div class="person-company">JP Morgan</div>
+                        <div class="person-reason">Interested in Ecom AI Summit + Q4 Summit. Victoria wants a call.</div>
+                        <div class="person-dates">📅 TBD — confirm</div>
+                    </div>
+                    <div class="person-rating rating-7">7</div>
+                </div>
+                <div class="person-row">
+                    <div class="person-check"><input type="checkbox" id="p-mike" onchange="savePeople()"><label for="p-mike"></label></div>
+                    <div class="person-info">
+                        <div class="person-name">Mike Forbes</div>
+                        <div class="person-company">Vitamin Shoppe · CSO</div>
+                        <div class="person-reason">Key retail partnership. Follow-up meeting pending.</div>
+                        <div class="person-dates">📅 TBD — confirm</div>
+                    </div>
+                    <div class="person-rating rating-7">7</div>
+                </div>
+            </div>
         </div>
 
-        <div class="section-divider">· · ·</div>
-
-        <!-- LOCAL SPOTS -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">📍 Nearby Essentials</div>
-                <span class="card-badge badge-local">LOCAL</span>
+        <!-- NEARBY SPOTS -->
+        <div class="section" id="spots">
+            <div class="section-toggle" onclick="toggle(this)">
+                <div class="toggle-left">
+                    <span class="toggle-title">📍 Nearby Essentials</span>
+                    <span class="toggle-badge badge-local">LOCAL</span>
+                </div>
+                <span class="chevron">▼</span>
             </div>
-            <div class="card-date">Near Troy's Apartment — Edgewater / Midtown / Wynwood</div>
-
-            <h4 style="color: #5eead4; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-top: 8px; margin-bottom: 8px;">🥤 Fresh Juice</h4>
-            <ul class="spot-list">
-                <li>
-                    <span class="spot-name">Jugofresh</span><span class="spot-type">Cold-Pressed</span>
-                    <div class="spot-address">3425 NE 2nd Ave, Miami (Midtown) — 0.8 mi</div>
-                    <div class="spot-note">Local favorite. Cold-pressed juices, smoothies, acai bowls. Clean menu.</div>
-                </li>
-                <li>
-                    <span class="spot-name">Pura Vida</span><span class="spot-type">Juice + Acai</span>
-                    <div class="spot-address">3801 NE 1st Ave, Miami (Design District) — 1.2 mi</div>
-                    <div class="spot-note">Miami staple. Acai bowls, fresh juices, smoothies. Quick and solid.</div>
-                </li>
-                <li>
-                    <span class="spot-name">Dr. Smood</span><span class="spot-type">Organic Cafe</span>
-                    <div class="spot-address">140 NE 39th St, Miami (Design District) — 1.5 mi</div>
-                    <div class="spot-note">Organic cold-pressed juices, matcha, clean food. Good work-from-cafe spot.</div>
-                </li>
-                <li>
-                    <span class="spot-name">Joe & The Juice</span><span class="spot-type">Juice + Coffee</span>
-                    <div class="spot-address">2602 NE 2nd Ave, Miami (Wynwood) — 0.9 mi</div>
-                    <div class="spot-note">Reliable. Fresh juices, sandwiches, coffee. Fast.</div>
-                </li>
-            </ul>
-
-            <h4 style="color: #5eead4; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-top: 24px; margin-bottom: 8px;">👔 Dry Cleaning</h4>
-            <ul class="spot-list">
-                <li>
-                    <span class="spot-name">Edgewater Dry Cleaners</span><span class="spot-type">Same-Day</span>
-                    <div class="spot-address">1620 NE 4th Ave, Miami — 0.3 mi</div>
-                    <div class="spot-note">Closest option. Same-day service available.</div>
-                </li>
-                <li>
-                    <span class="spot-name">Rinse</span><span class="spot-type">On-Demand Pickup</span>
-                    <div class="spot-address">App-based — covers Edgewater/Midtown</div>
-                    <div class="spot-note">Schedule pickup/delivery from the apartment. Next-day turnaround.</div>
-                </li>
-                <li>
-                    <span class="spot-name">MW Cleaners</span><span class="spot-type">Premium</span>
-                    <div class="spot-address">3401 NE 1st Ave #105, Miami (Midtown) — 1 mi</div>
-                    <div class="spot-note">Higher-end option. Good for suits and delicates.</div>
-                </li>
-            </ul>
-
-            <h4 style="color: #5eead4; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-top: 24px; margin-bottom: 8px;">🏪 Best Buy</h4>
-            <ul class="spot-list">
-                <li>
-                    <span class="spot-name">Best Buy — Midtown Miami</span><span class="spot-type">Closest</span>
-                    <div class="spot-address">3401 N Miami Ave, Miami, FL 33127 — 1.2 mi</div>
-                    <div class="spot-note">Closest location. Full store — electronics, cables, adapters, whatever you need.</div>
-                </li>
-            </ul>
+            <div class="section-body">
+                <div class="card-date">Near Troy's Apartment — Edgewater / Midtown / Wynwood</div>
+                <h4 style="color: #5eead4; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-top: 8px; margin-bottom: 8px;">🥤 Fresh Juice</h4>
+                <ul class="spot-list">
+                    <li><span class="spot-name">Jugofresh</span><span class="spot-type">Cold-Pressed</span><div class="spot-address">3425 NE 2nd Ave, Miami (Midtown) — 0.8 mi</div><div class="spot-note">Local favorite. Cold-pressed juices, smoothies, acai bowls.</div></li>
+                    <li><span class="spot-name">Pura Vida</span><span class="spot-type">Juice + Acai</span><div class="spot-address">3801 NE 1st Ave (Design District) — 1.2 mi</div><div class="spot-note">Miami staple. Acai bowls, fresh juices, smoothies.</div></li>
+                    <li><span class="spot-name">Dr. Smood</span><span class="spot-type">Organic Cafe</span><div class="spot-address">140 NE 39th St (Design District) — 1.5 mi</div><div class="spot-note">Organic cold-pressed, matcha. Good work-from-cafe spot.</div></li>
+                    <li><span class="spot-name">Joe & The Juice</span><span class="spot-type">Juice + Coffee</span><div class="spot-address">2602 NE 2nd Ave (Wynwood) — 0.9 mi</div><div class="spot-note">Reliable. Juices, sandwiches, coffee. Fast.</div></li>
+                </ul>
+                <h4 style="color: #5eead4; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-top: 24px; margin-bottom: 8px;">👔 Dry Cleaning</h4>
+                <ul class="spot-list">
+                    <li><span class="spot-name">Edgewater Dry Cleaners</span><span class="spot-type">Same-Day</span><div class="spot-address">1620 NE 4th Ave — 0.3 mi</div><div class="spot-note">Closest option. Same-day available.</div></li>
+                    <li><span class="spot-name">Rinse</span><span class="spot-type">On-Demand</span><div class="spot-address">App-based — covers Edgewater/Midtown</div><div class="spot-note">Pickup/delivery from apartment. Next-day turnaround.</div></li>
+                    <li><span class="spot-name">MW Cleaners</span><span class="spot-type">Premium</span><div class="spot-address">3401 NE 1st Ave #105 (Midtown) — 1 mi</div><div class="spot-note">Higher-end. Good for suits and delicates.</div></li>
+                </ul>
+                <h4 style="color: #5eead4; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-top: 24px; margin-bottom: 8px;">🏪 Best Buy</h4>
+                <ul class="spot-list">
+                    <li><span class="spot-name">Best Buy — Midtown Miami</span><span class="spot-type">Closest</span><div class="spot-address">3401 N Miami Ave, FL 33127 — 1.2 mi</div><div class="spot-note">Full store — electronics, cables, adapters.</div></li>
+                </ul>
+            </div>
         </div>
-
-        <div class="section-divider">· · ·</div>
 
         <!-- KEY CONTACTS -->
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">📱 Key Contacts — Miami</div>
-                <span class="card-badge badge-stay">CONTACTS</span>
+        <div class="section" id="contacts">
+            <div class="section-toggle" onclick="toggle(this)">
+                <div class="toggle-left">
+                    <span class="toggle-title">📱 Key Contacts</span>
+                    <span class="toggle-badge badge-contacts">CONTACTS</span>
+                </div>
+                <span class="chevron">▼</span>
             </div>
-            <div class="card-detail">
-                <div class="label">Troy Osinoff</div>
-                <div class="value">Co-host, apartment, all events</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Paul Campbell</div>
-                <div class="value">Music manager (NUMGMT)</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Brandon Launerts</div>
-                <div class="value">Social media / All Access Social (786-326-3319)</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Santiago Cruz</div>
-                <div class="value">Logistics + One K connection</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Nick Assunto</div>
-                <div class="value">DNABOX sound — account manager</div>
-            </div>
-            <div class="card-detail">
-                <div class="label">Go Rentals</div>
-                <div class="value">(866) 664-0994 — car rental at FXE</div>
+            <div class="section-body">
+                <div class="card-date">Miami Trip Team</div>
+                <div class="card-detail"><div class="label">Troy Osinoff</div><div class="value">Co-host, apartment, all events</div></div>
+                <div class="card-detail"><div class="label">Paul Campbell</div><div class="value">Music manager (NUMGMT)</div></div>
+                <div class="card-detail"><div class="label">Brandon Launerts</div><div class="value">Social / All Access (786-326-3319)</div></div>
+                <div class="card-detail"><div class="label">Santiago Cruz</div><div class="value">Logistics + One K connection</div></div>
+                <div class="card-detail"><div class="label">Nick Assunto</div><div class="value">DNABOX sound — account manager</div></div>
+                <div class="card-detail"><div class="label">Go Rentals</div><div class="value">(866) 664-0994 — car rental at FXE</div></div>
             </div>
         </div>
 
@@ -497,5 +566,90 @@
             <a href="index.html">← All Trips</a>
         </div>
     </div>
+
+    <script>
+        // Toggle collapsible sections
+        function toggle(el) {
+            el.classList.toggle('open');
+            const body = el.nextElementSibling;
+            body.classList.toggle('open');
+            // Save state
+            const sectionId = el.parentElement.id;
+            const states = JSON.parse(localStorage.getItem('miami-sections') || '{}');
+            states[sectionId] = body.classList.contains('open');
+            localStorage.setItem('miami-sections', JSON.stringify(states));
+        }
+
+        // Save people selections to localStorage
+        function savePeople() {
+            const checkboxes = document.querySelectorAll('.person-check input[type="checkbox"]');
+            const selected = {};
+            let count = 0;
+            checkboxes.forEach(cb => {
+                selected[cb.id] = cb.checked;
+                if (cb.checked) count++;
+            });
+            localStorage.setItem('miami-people', JSON.stringify(selected));
+            document.getElementById('selectedCount').textContent = count === 0 ? '0 people selected' : count + ' people selected — Jet will coordinate';
+            document.getElementById('selectedCount').style.background = count > 0 ? '#1a3a1a' : '#1a2a1a';
+        }
+
+        // Restore states on load
+        function restore() {
+            // Restore section states
+            const states = JSON.parse(localStorage.getItem('miami-sections') || '{}');
+            document.querySelectorAll('.section').forEach(section => {
+                const isOpen = states[section.id];
+                if (isOpen) {
+                    section.querySelector('.section-toggle').classList.add('open');
+                    section.querySelector('.section-body').classList.add('open');
+                }
+            });
+
+            // Restore people selections
+            const people = JSON.parse(localStorage.getItem('miami-people') || '{}');
+            let count = 0;
+            Object.entries(people).forEach(([id, checked]) => {
+                const cb = document.getElementById(id);
+                if (cb) { cb.checked = checked; if (checked) count++; }
+            });
+            if (count > 0) {
+                document.getElementById('selectedCount').textContent = count + ' people selected — Jet will coordinate';
+                document.getElementById('selectedCount').style.background = '#1a3a1a';
+            }
+        }
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('nav a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Auto-open the section
+                    const toggleEl = target.querySelector('.section-toggle');
+                    const bodyEl = target.querySelector('.section-body');
+                    if (toggleEl && bodyEl && !bodyEl.classList.contains('open')) {
+                        toggleEl.classList.add('open');
+                        bodyEl.classList.add('open');
+                    }
+                }
+            });
+        });
+
+        // Highlight active nav on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            let current = '';
+            sections.forEach(s => {
+                if (window.scrollY >= s.offsetTop - 80) current = s.id;
+            });
+            document.querySelectorAll('nav a').forEach(a => {
+                a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+            });
+        });
+
+        restore();
+    </script>
 </body>
 </html>
