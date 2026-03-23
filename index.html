@@ -65,29 +65,27 @@
     </div>
     <script>
     (function() {
-        const PIN_HASH = '7768e375a15e957a64adf43f42e9c54666a035ab58596e198a4a497bb17d65e8';
-        let pin = '';
-        const dots = [document.getElementById('dot0'), document.getElementById('dot1'), document.getElementById('dot2'), document.getElementById('dot3')];
+        var PIN = '3690';
+        var pin = '';
+        var dots = [document.getElementById('dot0'), document.getElementById('dot1'), document.getElementById('dot2'), document.getElementById('dot3')];
         if (sessionStorage.getItem('travel-unlocked') === 'true') {
-            document.getElementById('lockScreen').classList.add('unlocked');
+            document.getElementById('lockScreen').style.display = 'none';
         }
         window.pinPress = function(n) {
             if (pin.length >= 4) return;
             pin += n;
             dots[pin.length - 1].classList.add('filled');
             if (pin.length === 4) {
-                crypto.subtle.digest('SHA-256', new TextEncoder().encode(pin)).then(buf => {
-                    const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-                    if (hash === PIN_HASH) {
-                        sessionStorage.setItem('travel-unlocked', 'true');
-                        document.getElementById('lockScreen').style.transition = 'opacity 0.3s';
-                        document.getElementById('lockScreen').style.opacity = '0';
-                        setTimeout(() => document.getElementById('lockScreen').classList.add('unlocked'), 300);
-                    } else {
-                        dots.forEach(d => { d.classList.remove('filled'); d.classList.add('error'); });
-                        setTimeout(() => { dots.forEach(d => d.classList.remove('error')); pin = ''; }, 500);
-                    }
-                });
+                if (pin === PIN) {
+                    sessionStorage.setItem('travel-unlocked', 'true');
+                    var ls = document.getElementById('lockScreen');
+                    ls.style.transition = 'opacity 0.3s';
+                    ls.style.opacity = '0';
+                    setTimeout(function() { ls.style.display = 'none'; }, 300);
+                } else {
+                    for (var i = 0; i < dots.length; i++) { dots[i].classList.remove('filled'); dots[i].classList.add('error'); }
+                    setTimeout(function() { for (var i = 0; i < dots.length; i++) { dots[i].classList.remove('error'); } pin = ''; }, 500);
+                }
             }
         };
         window.pinDelete = function() {
