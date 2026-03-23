@@ -163,7 +163,7 @@
             <div class="pin-btn" onclick="pinPress('7')"><div class="pin-btn-wrap">7<div class="pin-btn-sub">PQRS</div></div></div>
             <div class="pin-btn" onclick="pinPress('8')"><div class="pin-btn-wrap">8<div class="pin-btn-sub">TUV</div></div></div>
             <div class="pin-btn" onclick="pinPress('9')"><div class="pin-btn-wrap">9<div class="pin-btn-sub">WXYZ</div></div></div>
-            <div class="pin-btn pin-delete" onclick="pinDelete()"></div>
+            <div class="pin-btn pin-delete" onclick="pinEnter()">OK</div>
             <div class="pin-btn" onclick="pinPress('0')"><div class="pin-btn-wrap">0</div></div>
             <div class="pin-btn pin-delete" onclick="pinDelete()">⌫</div>
         </div>
@@ -175,23 +175,24 @@
         var pin = '';
         var dots = [document.getElementById('dot0'), document.getElementById('dot1'), document.getElementById('dot2'), document.getElementById('dot3')];
         if (sessionStorage.getItem('travel-unlocked') === 'true') {
-            document.getElementById('lockScreen').classList.add('unlocked');
+            document.getElementById('lockScreen').style.display = 'none';
         }
         window.pinPress = function(n) {
             if (pin.length >= 4) return;
             pin += n;
             dots[pin.length - 1].classList.add('filled');
-            if (pin.length === 4) {
-                if (pin === PIN) {
-                    sessionStorage.setItem('travel-unlocked', 'true');
-                    var ls = document.getElementById('lockScreen');
-                    ls.style.transition = 'opacity 0.3s';
-                    ls.style.opacity = '0';
-                    setTimeout(function() { ls.style.display = 'none'; }, 300);
-                } else {
-                    for (var i = 0; i < dots.length; i++) { dots[i].classList.remove('filled'); dots[i].classList.add('error'); }
-                    setTimeout(function() { for (var i = 0; i < dots.length; i++) { dots[i].classList.remove('error'); } pin = ''; }, 500);
-                }
+        };
+        window.pinEnter = function() {
+            if (pin.length !== 4) return;
+            if (pin === PIN) {
+                sessionStorage.setItem('travel-unlocked', 'true');
+                var ls = document.getElementById('lockScreen');
+                ls.style.transition = 'opacity 0.3s';
+                ls.style.opacity = '0';
+                setTimeout(function() { ls.style.display = 'none'; }, 300);
+            } else {
+                for (var i = 0; i < 4; i++) { dots[i].classList.remove('filled'); dots[i].classList.add('error'); }
+                setTimeout(function() { for (var i = 0; i < 4; i++) { dots[i].classList.remove('error'); } pin = ''; }, 500);
             }
         };
         window.pinDelete = function() {
