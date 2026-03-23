@@ -172,7 +172,7 @@
     <script>
     (function() {
         // PIN: 2026 (SHA-256 hash for basic obfuscation)
-        const PIN_HASH = '4a44dc15364204a80fe80e9039455cc1608281820fe2b24f1e5233ade6af1dd5';
+        const PIN_HASH = '7768e375a15e957a64adf43f42e9c54666a035ab58596e198a4a497bb17d65e8';
         let pin = '';
         const dots = [document.getElementById('dot0'), document.getElementById('dot1'), document.getElementById('dot2'), document.getElementById('dot3')];
 
@@ -221,7 +221,7 @@
             <a href="#yacht">Yacht</a>
             <a href="#onek">One K</a>
             <a href="#podcasts">Podcasts</a>
-            <a href="#people">People</a>
+            
             <a href="#spots">Spots</a>
             <a href="#contacts">Contacts</a>
         </div>
@@ -436,170 +436,6 @@
                 </ul>
             </div>
         </div>
-
-        <!-- PEOPLE TO MEET — INTERACTIVE -->
-        <div class="section" id="people">
-            <div class="section-toggle" onclick="toggle(this)">
-                <div class="toggle-left">
-                    <span class="toggle-title">🤝 People to Meet</span>
-                    <span class="toggle-badge badge-people">NETWORKING</span>
-                </div>
-                <span class="chevron">▼</span>
-            </div>
-            <div class="section-body">
-                <div class="card-date">Tap the checkbox next to anyone you want to meet — Jet will coordinate</div>
-                <div class="selected-count" id="selectedCount">0 people selected</div>
-
-                <div class="tier-label" style="color: #ef4444;">🔥 MUST MEET</div>
-                <div class="person-row">
-                    <div class="person-check"><input type="checkbox" id="p-dimitrios" onchange="savePeople()"><label for="p-dimitrios"></label></div>
-                    <div class="person-info">
-                        <div class="person-name">Dimitrios Zacharias</div>
-                        <div class="person-company">UnKommon Events · Co-founder</div>
-                        <div class="person-reason">Close friend. Miami venue owner (Little River Studios). RV investment in play.</div>
-                        <div class="person-dates">📍 Lives in Miami</div>
-                    </div>
-                    <div class="person-rating rating-10">10</div>
-                </div>
-                <div class="person-row">
-                    <div class="person-check"><input type="checkbox" id="p-dan" onchange="savePeople()"><label for="p-dan"></label></div>
-                    <div class="person-info">
-                        <div class="person-name">Dan</div>
-                        <div class="person-company">Marpipe · Founder</div>
-                        <div class="person-reason">Best friend. Must-see if he's in Miami.</div>
-                        <div class="person-dates">📅 TBD — confirm if in Miami</div>
-                    </div>
-                    <div class="person-rating rating-10">10</div>
-                </div>
-
-                <div class="tier-label" style="color: #f59e0b;">⚡ HIGH PRIORITY</div>
-                <div class="person-row">
-                    <div class="person-check"><input type="checkbox" id="p-kenny" onchange="savePeople()"><label for="p-kenny"></label></div>
-                    <div class="person-info">
-                        <div class="person-name">Kenny Hanson</div>
-                        <div class="person-company">MentorPass · Founder/CEO</div>
-                        <div class="person-reason">In Miami for Hyrox. Wants Joe's Stone Crab dinner + cigars.</div>
-                        <div class="person-dates">📅 Late March (Hyrox weekend)</div>
-                    </div>
-                    <div class="person-rating rating-9">9</div>
-                </div>
-                <div class="person-row">
-                    <div class="person-check"><input type="checkbox" id="p-rasheen" onchange="savePeople()"><label for="p-rasheen"></label></div>
-                    <div class="person-info">
-                        <div class="person-name">Rasheen</div>
-                        <div class="person-company">Flexpower · Founder</div>
-                        <div class="person-reason">Potential business partner. Still needs that text to set up a call.</div>
-                        <div class="person-dates">📅 TBD — confirm</div>
-                    </div>
-                    <div class="person-rating rating-9">9</div>
-                </div>
-
-                <div class="tier-label" style="color: #22d3ee;">💎 STRONG</div>
-                <div class="person-row">
-                    <div class="person-check"><input type="checkbox" id="p-philippe" onchange="savePeople()"><label for="p-philippe"></label></div>
-                    <div class="person-info">
-                        <div class="person-name">Philippe von Borries</div>
-                        <div class="person-company">Esspo · Founder</div>
-                        <div class="person-reason">Beverage brand. Shelf launch April 6.</div>
-                        <div class="person-dates">📅 TBD — shelf launch Apr 6</div>
-                    </div>
-                    <div class="person-rating rating-8">8</div>
-                </div>
-                <div class="person-row">
-                    <div class="person-check"><input type="checkbox" id="p-erica" onchange="savePeople()"><label for="p-erica"></label></div>
-                    <div class="person-info">
-                        <div class="person-name">Erica Amatori</div>
-                        <div class="person-company">Left Lane Capital</div>
-                        <div class="person-reason">Kids vitamin brand discussion. Agreed to in-person after Apr 6.</div>
-                        <div class="person-dates">📅 TBD — agreed to post-Apr 6</div>
-                    </div>
-                    <div class="person-rating rating-8">8</div>
-                </div>
-                <div class="person-row">
-                    <div class="person-check"><input type="checkbox" id="p-jordan" onchange="savePeople()"><label for="p-jordan"></label></div>
-                    <div class="person-info">
-                        <div class="person-name">Jordan Nathan</div>
-                        <div class="person-company">Caraway Home · Founder</div>
-                        <div class="person-reason">Mixing Bowl launch coordination. Active email threads.</div>
-                        <div class="person-dates">📅 TBD — confirm</div>
-                    </div>
-                    <div class="person-rating rating-8">8</div>
-                </div>
-                <div class="person-row">
-                    <div class="person-check"><input type="checkbox" id="p-hudson" onchange="savePeople()"><label for="p-hudson"></label></div>
-                    <div class="person-info">
-                        <div class="person-name">Hudson</div>
-                        <div class="person-company">Comfrt · Founder</div>
-                        <div class="person-reason">Podcast recording target. Great rapport from OpenClaw setup call.</div>
-                        <div class="person-dates">📅 TBD — confirm podcast recording</div>
-                    </div>
-                    <div class="person-rating rating-8">8</div>
-                </div>
-
-                <div class="tier-label" style="color: #a78bfa;">👀 WORTH IT</div>
-                <div class="person-row">
-                    <div class="person-check"><input type="checkbox" id="p-kyle" onchange="savePeople()"><label for="p-kyle"></label></div>
-                    <div class="person-info">
-                        <div class="person-name">Kyle</div>
-                        <div class="person-company">Price NY</div>
-                        <div class="person-reason">Mastermind Miami April 3rd signup sent.</div>
-                        <div class="person-dates">📅 Apr 3 (Mastermind)</div>
-                    </div>
-                    <div class="person-rating rating-7">7</div>
-                </div>
-                <div class="person-row">
-                    <div class="person-check"><input type="checkbox" id="p-miki" onchange="savePeople()"><label for="p-miki"></label></div>
-                    <div class="person-info">
-                        <div class="person-name">Miki</div>
-                        <div class="person-company">Hiro Technologies</div>
-                        <div class="person-reason">Follow-up pending. Connected with Jerrell (Tushy).</div>
-                        <div class="person-dates">📅 TBD — confirm</div>
-                    </div>
-                    <div class="person-rating rating-7">7</div>
-                </div>
-                <div class="person-row">
-                    <div class="person-check"><input type="checkbox" id="p-sterling" onchange="savePeople()"><label for="p-sterling"></label></div>
-                    <div class="person-info">
-                        <div class="person-name">Sterling</div>
-                        <div class="person-company">MentorPass</div>
-                        <div class="person-reason">Co-founder with Kenny. Combine with Kenny dinner.</div>
-                        <div class="person-dates">📅 Late Mar (with Kenny)</div>
-                    </div>
-                    <div class="person-rating rating-7">7</div>
-                </div>
-                <div class="person-row">
-                    <div class="person-check"><input type="checkbox" id="p-hoolest" onchange="savePeople()"><label for="p-hoolest"></label></div>
-                    <div class="person-info">
-                        <div class="person-name">Nick & Kim</div>
-                        <div class="person-company">Hoolest · Founders</div>
-                        <div class="person-reason">$540K/30 days. Exploring investment + marketing.</div>
-                        <div class="person-dates">📅 TBD — confirm</div>
-                    </div>
-                    <div class="person-rating rating-7">7</div>
-                </div>
-                <div class="person-row">
-                    <div class="person-check"><input type="checkbox" id="p-jpmorgan" onchange="savePeople()"><label for="p-jpmorgan"></label></div>
-                    <div class="person-info">
-                        <div class="person-name">Collin Rice & Victoria Davenport</div>
-                        <div class="person-company">JP Morgan</div>
-                        <div class="person-reason">Interested in Ecom AI Summit + Q4 Summit. Victoria wants a call.</div>
-                        <div class="person-dates">📅 TBD — confirm</div>
-                    </div>
-                    <div class="person-rating rating-7">7</div>
-                </div>
-                <div class="person-row">
-                    <div class="person-check"><input type="checkbox" id="p-mike" onchange="savePeople()"><label for="p-mike"></label></div>
-                    <div class="person-info">
-                        <div class="person-name">Mike Forbes</div>
-                        <div class="person-company">Vitamin Shoppe · CSO</div>
-                        <div class="person-reason">Key retail partnership. Follow-up meeting pending.</div>
-                        <div class="person-dates">📅 TBD — confirm</div>
-                    </div>
-                    <div class="person-rating rating-7">7</div>
-                </div>
-            </div>
-        </div>
-
         <!-- NEARBY SPOTS -->
         <div class="section" id="spots">
             <div class="section-toggle" onclick="toggle(this)">
