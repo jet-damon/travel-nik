@@ -54,6 +54,18 @@
         .back-link a { color: #60a5fa; text-decoration: none; font-size: 14px; }
         .back-link a:hover { text-decoration: underline; }
 
+        .badge-local { background: #1a3a3a; color: #5eead4; }
+        .badge-podcast { background: #3a2a1a; color: #fbbf24; }
+        .spot-list { list-style: none; padding: 0; }
+        .spot-list li { padding: 12px 0; border-bottom: 1px solid #1a1a1a; }
+        .spot-list li:last-child { border-bottom: none; }
+        .spot-name { font-weight: 700; color: #fff; font-size: 15px; }
+        .spot-type { font-size: 11px; color: #5eead4; text-transform: uppercase; letter-spacing: 0.5px; margin-left: 8px; }
+        .spot-address { font-size: 13px; color: #888; margin-top: 2px; }
+        .spot-note { font-size: 13px; color: #aaa; margin-top: 2px; }
+        .status-pending { color: #fbbf24; font-weight: 600; }
+        .status-confirmed { color: #4ade80; font-weight: 600; }
+
         .timeline { position: relative; padding-left: 20px; margin-top: 16px; }
         .timeline::before { content: ''; position: absolute; left: 6px; top: 4px; bottom: 4px; width: 2px; background: #333; }
         .timeline-item { position: relative; padding-left: 20px; margin-bottom: 14px; }
@@ -308,22 +320,101 @@
 
         <div class="section-divider">· · ·</div>
 
-        <!-- COLOMBIA -->
+        <!-- PODCASTS -->
         <div class="card">
             <div class="card-header">
-                <div class="card-title">🇨🇴 Colombia Shows</div>
-                <span class="card-badge badge-travel">TRAVEL</span>
+                <div class="card-title">🎙️ In-Person Podcasts</div>
+                <span class="card-badge badge-podcast">PODCASTS</span>
             </div>
-            <div class="card-date">Wednesday, April 2 & Friday, April 4, 2026</div>
-            
+            <div class="card-date">During Miami Trip — Dates TBD</div>
+
             <div class="card-detail">
-                <div class="label">Details</div>
-                <div class="value">TBD — two shows confirmed in Colombia</div>
+                <div class="label">Status</div>
+                <div class="value">Nik texted all guests — <span class="status-pending">awaiting confirmations</span></div>
             </div>
 
-            <div class="info-note">
-                📝 Flight and venue details to be added once confirmed.
+            <ul class="spot-list" style="margin-top: 16px;">
+                <li>
+                    <span class="spot-name">Podcast Hudson</span>
+                    <div class="spot-address"><span class="status-pending">⏳ Pending confirmation</span></div>
+                </li>
+                <li>
+                    <span class="spot-name">Eight Sleep Founders</span>
+                    <div class="spot-address"><span class="status-pending">⏳ Pending confirmation</span></div>
+                </li>
+                <li>
+                    <span class="spot-name">Geoff Hunting</span>
+                    <div class="spot-address"><span class="status-pending">⏳ Pending confirmation</span></div>
+                </li>
+                <li>
+                    <span class="spot-name">Instant.ai Client (via WW sponsor)</span>
+                    <div class="spot-address"><span class="status-pending">⏳ Pending — week of Mar 30</span></div>
+                    <div class="spot-note">In-person podcast with one of Instant's clients. Coordinated through Workweek.</div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section-divider">· · ·</div>
+
+        <!-- LOCAL SPOTS -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">📍 Nearby Essentials</div>
+                <span class="card-badge badge-local">LOCAL</span>
             </div>
+            <div class="card-date">Near Troy's Apartment — Edgewater / Midtown / Wynwood</div>
+
+            <h4 style="color: #5eead4; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-top: 8px; margin-bottom: 8px;">🥤 Fresh Juice</h4>
+            <ul class="spot-list">
+                <li>
+                    <span class="spot-name">Jugofresh</span><span class="spot-type">Cold-Pressed</span>
+                    <div class="spot-address">3425 NE 2nd Ave, Miami (Midtown) — 0.8 mi</div>
+                    <div class="spot-note">Local favorite. Cold-pressed juices, smoothies, acai bowls. Clean menu.</div>
+                </li>
+                <li>
+                    <span class="spot-name">Pura Vida</span><span class="spot-type">Juice + Acai</span>
+                    <div class="spot-address">3801 NE 1st Ave, Miami (Design District) — 1.2 mi</div>
+                    <div class="spot-note">Miami staple. Acai bowls, fresh juices, smoothies. Quick and solid.</div>
+                </li>
+                <li>
+                    <span class="spot-name">Dr. Smood</span><span class="spot-type">Organic Cafe</span>
+                    <div class="spot-address">140 NE 39th St, Miami (Design District) — 1.5 mi</div>
+                    <div class="spot-note">Organic cold-pressed juices, matcha, clean food. Good work-from-cafe spot.</div>
+                </li>
+                <li>
+                    <span class="spot-name">Joe & The Juice</span><span class="spot-type">Juice + Coffee</span>
+                    <div class="spot-address">2602 NE 2nd Ave, Miami (Wynwood) — 0.9 mi</div>
+                    <div class="spot-note">Reliable. Fresh juices, sandwiches, coffee. Fast.</div>
+                </li>
+            </ul>
+
+            <h4 style="color: #5eead4; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-top: 24px; margin-bottom: 8px;">👔 Dry Cleaning</h4>
+            <ul class="spot-list">
+                <li>
+                    <span class="spot-name">Edgewater Dry Cleaners</span><span class="spot-type">Same-Day</span>
+                    <div class="spot-address">1620 NE 4th Ave, Miami — 0.3 mi</div>
+                    <div class="spot-note">Closest option. Same-day service available.</div>
+                </li>
+                <li>
+                    <span class="spot-name">Rinse</span><span class="spot-type">On-Demand Pickup</span>
+                    <div class="spot-address">App-based — covers Edgewater/Midtown</div>
+                    <div class="spot-note">Schedule pickup/delivery from the apartment. Next-day turnaround.</div>
+                </li>
+                <li>
+                    <span class="spot-name">MW Cleaners</span><span class="spot-type">Premium</span>
+                    <div class="spot-address">3401 NE 1st Ave #105, Miami (Midtown) — 1 mi</div>
+                    <div class="spot-note">Higher-end option. Good for suits and delicates.</div>
+                </li>
+            </ul>
+
+            <h4 style="color: #5eead4; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-top: 24px; margin-bottom: 8px;">🏪 Best Buy</h4>
+            <ul class="spot-list">
+                <li>
+                    <span class="spot-name">Best Buy — Midtown Miami</span><span class="spot-type">Closest</span>
+                    <div class="spot-address">3401 N Miami Ave, Miami, FL 33127 — 1.2 mi</div>
+                    <div class="spot-note">Closest location. Full store — electronics, cables, adapters, whatever you need.</div>
+                </li>
+            </ul>
         </div>
 
         <div class="section-divider">· · ·</div>
